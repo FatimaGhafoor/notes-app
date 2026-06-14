@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notes App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="app">
+    <h1>My Notes</h1>
+
+    <div class="note-form">
+      <input type="text" id="note-title" placeholder="Title" />
+      <textarea id="note-body" placeholder="Write your note..."></textarea>
+      <button id="add-note-btn">Add Note</button>
+    </div>
+
+    <div id="notes-container">
+      <!-- notes render here -->
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
