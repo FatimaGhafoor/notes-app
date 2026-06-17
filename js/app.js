@@ -1,36 +1,15 @@
-function createCounter() {
-  let count = 0;
-
-  function increment() {
-    count++;
-  }
-
-  function decrement() {
-    count--;
-  }
-
-  function value() {
-    return count;
-  }
-
-  return {
-    increment,
-    decrement,
-    value,
-  };
+// 1. reads from localStorage, returns array
+function getNotes() {
+  const notes = localStorage.getItem("notes");
+  return notes ? JSON.parse(notes) : [];
 }
 
-const counter = createCounter();
-counter.increment();
-counter.increment();
-counter.decrement();
-console.log(counter.value());
+// 2. saves array to localStorage
+function saveNotes(notes) {
+  localStorage.setItem("notes", JSON.stringify(notes));
+}
 
-/* count is not reset because increment() does not create count — 
-it only reads and updates it. 
-count actually belongs to createCounter()'s scope.
-
-As long as counter keeps holding reference to those inner functions, 
-that scope stays alive in memory.
-This whole behavior is called closure.
-*/
+// 3. removes notes from localStorage
+function clearNotes() {
+  localStorage.removeItem("notes");
+}
