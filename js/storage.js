@@ -1,7 +1,12 @@
 // 1. reads from localStorage, returns array
 function getNotes() {
-  const notes = localStorage.getItem("notes");
-  return notes ? JSON.parse(notes) : [];
+  try {
+    const notes = localStorage.getItem("notes");
+    return notes ? JSON.parse(notes) : [];
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 }
 
 // 2. saves array to localStorage
