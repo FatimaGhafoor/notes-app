@@ -13,9 +13,15 @@ function renderNote(note) {
   deleteBtn.dataset.id = note.id;
   deleteBtn.classList.add("delete-btn");
 
+  const editBtn = document.createElement("button");
+  editBtn.textContent = "Edit";
+  editBtn.dataset.id = note.id;
+  editBtn.classList.add("edit-btn");
+
   div.appendChild(h3);
   div.appendChild(p);
   div.appendChild(deleteBtn);
+  div.appendChild(editBtn);
 
   return div;
 }
