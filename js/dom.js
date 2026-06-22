@@ -8,8 +8,14 @@ function renderNote(note) {
   const p = document.createElement("p");
   p.textContent = note.body;
 
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.dataset.id = note.id;
+  deleteBtn.classList.add("delete-btn");
+
   div.appendChild(h3);
   div.appendChild(p);
+  div.appendChild(deleteBtn);
 
   return div;
 }

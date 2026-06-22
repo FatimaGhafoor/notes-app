@@ -23,6 +23,18 @@ function initEvents() {
     titleInput.value = "";
     bodyInput.value = "";
   });
+
+  const container = document.querySelector("#notes-container");
+
+  container.addEventListener("click", (e) => {
+    if (e.target.classList.contains("delete-btn")) {
+      const id = Number(e.target.dataset.id);
+      const notes = getNotes();
+      const updatedNotes = notes.filter((note) => note.id !== id);
+      saveNotes(updatedNotes);
+      renderAllNotes(updatedNotes);
+    }
+  });
 }
 
 export { initEvents };
