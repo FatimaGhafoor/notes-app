@@ -7,21 +7,42 @@ function initEvents() {
   addBtn.addEventListener("click", () => {
     const titleInput = document.querySelector("#note-title");
     const bodyInput = document.querySelector("#note-body");
+    const editId = addBtn.dataset.editId;
 
-    const newNote = {
-      id: Date.now(),
-      title: titleInput.value,
-      body: bodyInput.value,
-    };
+    if (editId) {
+      const notes = getNotes();
+      const noteToEdit = notes.find((note) => Number(editId) === note.id);
 
-    const notes = getNotes();
-    notes.push(newNote);
+      const updatedNotes = notes.map((note) => {
+        if (note.id === Number(editId)) {
+          return { ...note, title: titleInput.value, body: bodyInput.value };
+        }
+        return note;
+      });
+      saveNotes(updatedNotes);
+      renderAllNotes(updatedNotes);
+      addBtn.textContent = "Add Note";
 
-    saveNotes(notes);
-    renderAllNotes(notes);
+      delete addBtn.dataset.editId;
 
-    titleInput.value = "";
-    bodyInput.value = "";
+      titleInput.value = "";
+      bodyInput.value = "";
+    } else {
+      const newNote = {
+        id: Date.now(),
+        title: titleInput.value,
+        body: bodyInput.value,
+      };
+
+      const notes = getNotes();
+      notes.push(newNote);
+
+      saveNotes(notes);
+      renderAllNotes(notes);
+
+      titleInput.value = "";
+      bodyInput.value = "";
+    }
   });
 
   const container = document.querySelector("#notes-container");
