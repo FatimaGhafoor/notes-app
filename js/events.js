@@ -71,6 +71,21 @@ function initEvents() {
       addBtn.dataset.editId = id;
     }
   });
+
+  const searchInput = document.querySelector("#search-input");
+
+  searchInput.addEventListener("input", () => {
+    const searchTerm = searchInput.value.toLowerCase();
+    const notes = getNotes();
+
+    const filteredNotes = notes.filter((note) => {
+      return (
+        note.title.toLowerCase().includes(searchTerm) ||
+        note.body.toLowerCase().includes(searchTerm)
+      );
+    });
+    renderAllNotes(filteredNotes);
+  });
 }
 
 export { initEvents };
