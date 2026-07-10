@@ -1,8 +1,25 @@
+:root {
+  --color-primary: #4f46e5;
+  --color-primary-dark: #4338ca;
+  --color-danger: #ef4444;
+  --color-danger-dark: #dc2626;
+  --color-border: #9ca3af;
+  --color-text: #1f2937;
+  --color-text-muted: #6b7280;
+  --color-bg: #f9fafb;
+  --color-surface: #ffffff;
+  --color-btn-neutral: #f3f4f6;
+  --color-btn-neutral-hover: #e5e7eb;
+  --radius: 8px;
+  --radius-sm: 6px;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+
 body {
   font-family: sans-serif;
   padding: 2rem;
@@ -14,14 +31,14 @@ h1 {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
-  color: #4f46e5;
+  color: var(--color-primary);
 }
 
 .note-form {
-  background: #ffffff;
+  background: var(--color-surface);
   padding: 1.5rem;
-  border-radius: 8px;
-  border: 1px solid #9ca3af;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
   margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
@@ -32,18 +49,19 @@ input,
 textarea {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #9ca3af;
-  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
   font-size: 1rem;
-  color: #1f2937;
-  background: #f9fafb;
+  color: var(--color-text);
+  background: var(--color-bg);
   outline: none;
+  font-family: inherit;
 }
 
 input:focus,
 textarea:focus {
-  border-color: #4f46e5;
-  background: #ffffff;
+  border-color: var(--color-primary);
+  background: var(--color-surface);
 }
 
 textarea {
@@ -54,7 +72,7 @@ textarea {
 button {
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
@@ -62,13 +80,19 @@ button {
 }
 
 #add-note-btn {
-  background-color: #4f46e5;
-  color: #ffffff;
+  background-color: var(--color-primary);
+  color: var(--color-surface);
   width: 100%;
 }
 
 #add-note-btn:hover {
-  background-color: #4338ca;
+  background-color: var(--color-primary-dark);
+}
+
+/* Adjust this selector to match your actual search bar's class/id if different */
+.search-bar,
+#search-input {
+  margin-bottom: 1.5rem;
 }
 
 #notes-container {
@@ -77,55 +101,62 @@ button {
   gap: 1rem;
 }
 
+/* Grid layout: h3 and p each span both columns (full width),
+   the two action buttons then auto-place into the next row,
+   one per column -> they sit side by side automatically. */
 .note-card {
-  background: #ffffff;
-  border: 1px solid #9ca3af;
-  border-radius: 8px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
   padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
-  flex-wrap: wrap;
-  flex-direction: row;
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+
+.note-card h3,
+.note-card p {
+  grid-column: 1 / -1;
+}
+
+.note-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
 }
 
 .note-card h3 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--color-text);
 }
 
 .note-card p {
   font-size: 0.9rem;
-  color: #6b7280;
-  flex-grow: 1;
+  color: var(--color-text-muted);
 }
 
 .delete-btn {
-  background-color: #ef4444;
-  color: #ffffff;
+  background-color: var(--color-danger);
+  color: var(--color-surface);
 }
 
 .delete-btn:hover {
-  background-color: #dc2626;
+  background-color: var(--color-danger-dark);
 }
 
 .edit-btn {
-  background-color: #f3f4f6;
-  color: #1f2937;
-  border: 1px solid #9ca3af;
+  background-color: var(--color-btn-neutral);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
 }
 
 .edit-btn:hover {
-  background-color: #e5e7eb;
+  background-color: var(--color-btn-neutral-hover);
 }
 
-.note-card .delete-btn,
-.note-card .edit-btn {
-  width: 48%;
-}
-
-.note-card h3,
-.note-card p {
-  width: 100%;
-}
+/* Buttons don't need explicit width/flex rules anymore —
+   grid-template-columns: 1fr 1fr on .note-card already gives
+   each button an equal-width column. */
