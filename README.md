@@ -12,7 +12,12 @@ No frameworks, no libraries — pure JS, DOM, and localStorage.
 - Add notes
 - Edit notes
 - Delete notes
-- Data persists across page refresh
+- Delete confirmation via inline delete button
+- Search notes by title or body
+- Live notes counter (total notes)
+- Input validation — empty title/body blocked
+- Character limits enforced (title: 50, body: 300 chars)
+- Data persists across page refresh (localStorage)
 
 ## Tech Stack
 
@@ -22,9 +27,11 @@ No frameworks, no libraries — pure JS, DOM, and localStorage.
 
 ## Project Structure
 
+## Project Structure
+
 - `storage.js` — getNotes, saveNotes, clearNotes (localStorage with error handling)
-- `dom.js` — renderNote, renderAllNotes (pure DOM rendering, no business logic)
-- `events.js` — initEvents (click listener, builds note object, wires storage + dom)
+- `dom.js` — renderNote, renderAllNotes, renderNotesCount, showFormError, clearFormError (pure DOM rendering, no business logic)
+- `events.js` — initEvents (click/input listeners, validation, builds note object, wires storage + dom)
 - `app.js` — entry point, loads existing notes on page start
 
 ## How to Run
