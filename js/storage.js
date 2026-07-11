@@ -1,3 +1,7 @@
+/* File: storage.js
+Responsibility:  
+*/
+
 // 1. reads from localStorage, returns array
 function getNotes() {
   try {

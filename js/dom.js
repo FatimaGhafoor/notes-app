@@ -1,3 +1,7 @@
+/* File: dom.js
+Responsibility: create and render DOM elements (note cards, counter, form errors)
+*/
+
 function renderNote(note) {
   const div = document.createElement("div");
   div.classList.add("note-card");
@@ -38,4 +42,35 @@ function renderAllNotes(notes) {
   }
 }
 
-export { renderNote, renderAllNotes };
+// Shows total note count. Pass the FULL notes array length,
+// not a filtered/search result length.
+function renderNotesCount(count) {
+  const counterEl = document.querySelector("#notes-count");
+  if (counterEl) {
+    counterEl.textContent = `Total notes: ${count}`;
+  }
+}
+
+function showFormError(message) {
+  const errorEl = document.querySelector("#form-error");
+  if (errorEl) {
+    errorEl.textContent = message;
+    errorEl.style.display = "block";
+  }
+}
+
+function clearFormError() {
+  const errorEl = document.querySelector("#form-error");
+  if (errorEl) {
+    errorEl.textContent = "";
+    errorEl.style.display = "none";
+  }
+}
+
+export {
+  renderNote,
+  renderAllNotes,
+  renderNotesCount,
+  showFormError,
+  clearFormError,
+};

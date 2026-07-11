@@ -1,5 +1,17 @@
+/* File: events.js
+Responsibility: wire up all user interactions (add/edit/delete/search) and validation
+*/
+
 import { getNotes, saveNotes } from "./storage.js";
-import { renderAllNotes } from "./dom.js";
+import {
+  renderAllNotes,
+  renderNotesCount,
+  showFormError,
+  clearFormError,
+} from "./dom.js";
+
+const MAX_TITLE_LENGTH = 50;
+const MAX_BODY_LENGTH = 300;
 
 function initEvents() {
   const addBtn = document.querySelector("#add-note-btn");
@@ -9,29 +21,47 @@ function initEvents() {
     const bodyInput = document.querySelector("#note-body");
     const editId = addBtn.dataset.editId;
 
+    const title = titleInput.value.trim();
+    const body = bodyInput.value.trim();
+
+    // 1. Block empty title/body
+    if (!title || !body) {
+      showFormError("Title and note cannot both be empty.");
+      return;
+    }
+
+    // 2. Enforce character limits
+    if (title.length > MAX_TITLE_LENGTH) {
+      showFormError(`Title cannot exceed ${MAX_TITLE_LENGTH} characters.`);
+      return;
+    }
+    if (body.length > MAX_BODY_LENGTH) {
+      showFormError(`Note cannot exceed ${MAX_BODY_LENGTH} characters.`);
+      return;
+    }
+
+    clearFormError();
+
     if (editId) {
       const notes = getNotes();
-      const noteToEdit = notes.find((note) => Number(editId) === note.id);
-
       const updatedNotes = notes.map((note) => {
         if (note.id === Number(editId)) {
-          return { ...note, title: titleInput.value, body: bodyInput.value };
+          return { ...note, title, body };
         }
         return note;
       });
+
       saveNotes(updatedNotes);
       renderAllNotes(updatedNotes);
+      renderNotesCount(updatedNotes.length);
+
       addBtn.textContent = "Add Note";
-
       delete addBtn.dataset.editId;
-
-      titleInput.value = "";
-      bodyInput.value = "";
     } else {
       const newNote = {
         id: Date.now(),
-        title: titleInput.value,
-        body: bodyInput.value,
+        title,
+        body,
       };
 
       const notes = getNotes();
@@ -39,10 +69,11 @@ function initEvents() {
 
       saveNotes(notes);
       renderAllNotes(notes);
-
-      titleInput.value = "";
-      bodyInput.value = "";
+      renderNotesCount(notes.length);
     }
+
+    titleInput.value = "";
+    bodyInput.value = "";
   });
 
   const container = document.querySelector("#notes-container");
@@ -54,6 +85,7 @@ function initEvents() {
       const updatedNotes = notes.filter((note) => note.id !== id);
       saveNotes(updatedNotes);
       renderAllNotes(updatedNotes);
+      renderNotesCount(updatedNotes.length);
     }
 
     if (e.target.classList.contains("edit-btn")) {
@@ -69,6 +101,8 @@ function initEvents() {
       const addBtn = document.querySelector("#add-note-btn");
       addBtn.textContent = "Save Changes";
       addBtn.dataset.editId = id;
+
+      clearFormError();
     }
   });
 
@@ -84,7 +118,10 @@ function initEvents() {
         note.body.toLowerCase().includes(searchTerm)
       );
     });
+
     renderAllNotes(filteredNotes);
+    // Counter always reflects TOTAL notes, not search results
+    renderNotesCount(notes.length);
   });
 }
 
