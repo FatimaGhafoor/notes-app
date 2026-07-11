@@ -120,6 +120,9 @@ button {
 .note-card h3,
 .note-card p {
   grid-column: 1 / -1;
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .note-card:hover {
