@@ -1,5 +1,5 @@
 /* File: storage.js
-Responsibility:  
+Responsibility: read/write notes to localStorage (getNotes, saveNotes, clearNotes) with error handling
 */
 
 // 1. reads from localStorage, returns array
